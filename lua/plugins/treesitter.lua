@@ -30,6 +30,8 @@ return {
       highlight = { enable = true }, ---@type lazyvim.TSFeat
       folds = { enable = true }, ---@type lazyvim.TSFeat
       ensure_installed = {
+        "asciidoc",
+        "asciidoc_inline",
         "bash",
         "c",
         "diff",
@@ -59,6 +61,34 @@ return {
     ---@param opts lazyvim.TSConfig
     config = function(_, opts)
       local TS = require("nvim-treesitter")
+
+      -- asciidoc parsers are not in nvim-treesitter's list; register them (used by markview)
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "TSUpdate",
+        callback = function()
+          local parsers = require("nvim-treesitter.parsers")
+          local url = "https://github.com/cathaysia/tree-sitter-asciidoc"
+          local revision = "882e43173427b831cd0d98ab3525501bed6ea214"
+          parsers.asciidoc = {
+            install_info = {
+              url = url,
+              revision = revision,
+              location = "tree-sitter-asciidoc",
+              generate = true,
+              queries = "queries/asciidoc",
+            },
+          }
+          parsers.asciidoc_inline = {
+            install_info = {
+              url = url,
+              revision = revision,
+              location = "tree-sitter-asciidoc_inline",
+              generate = true,
+              queries = "queries/asciidoc_inline",
+            },
+          }
+        end,
+      })
 
       setmetatable(require("nvim-treesitter.install"), {
         __newindex = function(_, k)

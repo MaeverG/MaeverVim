@@ -5,6 +5,10 @@ return {
     priority = 1000,
     opts = {
       flavour = "frappe", -- latte, frappe, macchiato, mocha
+      -- let the terminal's background (and its opacity) show through
+      transparent_background = true,
+      float = { transparent = true, solid = false },
+      term_colors = false,
       lsp_styles = {
         underlines = {
           errors = { "undercurl" },

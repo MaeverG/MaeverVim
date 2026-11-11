@@ -288,3 +288,8 @@ vim.keymap.set("n", "<C-g>", function()
   vim.fn.setreg("+", path)
   vim.notify(path)
 end, { desc = "Copy relative path to clipboard" })
+
+-- Toggle markview rendering (markdown / asciidoc)
+vim.keymap.set("n", "<leader>m", function()
+  require("util.adoc").toggle()
+end, { desc = "Toggle Markview" })
