@@ -136,3 +136,12 @@ vim.api.nvim_create_autocmd("FileType", {
     require("util.adoc").attach(ev.buf)
   end,
 })
+
+-- `ib` selects the code span / fenced block under the cursor
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("code_textobject"),
+  pattern = { "asciidoc", "markdown" },
+  callback = function(ev)
+    require("util.codeobj").attach(ev.buf)
+  end,
+})
